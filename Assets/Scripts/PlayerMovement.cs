@@ -1,9 +1,8 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-
 public class PlayerMovement : MonoBehaviour
 {
+    public Speedometer speedometer;
+
     [Header("Movement")]
     public float moveSpeed;
 
@@ -42,6 +41,7 @@ public class PlayerMovement : MonoBehaviour
         grounded = Physics.Raycast(transform.position, Vector3.down, playerHeight * 0.5f + 0.2f, whatIsGround);
         MyInput();
         SpeedControl();
+        UpdateSpeedometer(rb.velocity.magnitude);
         // handle drag
         if (grounded){
             rb.drag = groundDrag;
@@ -52,6 +52,10 @@ public class PlayerMovement : MonoBehaviour
 
     private void FixedUpdate() {
         MovePlayer();
+    }
+
+    private void UpdateSpeedometer(float speed){
+        speedometer.SetSpeed(speed);
     }
 
     private void MyInput() {
